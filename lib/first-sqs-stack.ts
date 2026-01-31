@@ -17,7 +17,7 @@ export class FirstSqsStack extends cdk.Stack {
       entry: path.join(__dirname, "../src/lambdas/handler.ts"),
       functionName: `${this.stackName}-producer-function`,
     });
-    const consumer = new NodejsFunction(this, "ProducerFunction", {
+    const consumer = new NodejsFunction(this, "ConsumerFunction", {
       runtime: lambdaBase.Runtime.NODEJS_22_X,
       handler: "consumerHandler",
       entry: path.join(__dirname, "../src/lambdas/handler.ts"),
