@@ -1,0 +1,8 @@
+@URL=https://f494avy7fb.execute-api.us-east-1.amazonaws.com/prod/orders
+### Create Order
+POST {{URL}}
+Content-Type: application/json
+
+{
+    "orderId": "456"
+}

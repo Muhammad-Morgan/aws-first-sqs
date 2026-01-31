@@ -3,6 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 export async function producerHandler(
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   try {
     const { orderId } = JSON.parse(event.body!);
 
