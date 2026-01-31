@@ -1,24 +1,28 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 
 export async function producerHandler(
-  event: APIGatewayProxyEventV2,
-): Promise<APIGatewayProxyResultV2> {
-  console.log("Producer: ", event);
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "ay 7aga",
-    }),
-  };
+  event: APIGatewayProxyEvent,
+): Promise<APIGatewayProxyResult> {
+  try {
+    const { orderId } = JSON.parse(event.body!);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: "Order created",
+        orderId,
+      }),
+    };
+  } catch (error) {
+    console.error("Error creating order:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        message: "Error creating order",
+      }),
+    };
+  }
 }
-export async function consumerHandler(
-  event: APIGatewayProxyEventV2,
-): Promise<APIGatewayProxyResultV2> {
-  console.log("Consumer: ", event);
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "ay 7aga",
-    }),
-  };
+export async function consumerHandler(): Promise<void> {
+  console.log("finished processing order");
 }
