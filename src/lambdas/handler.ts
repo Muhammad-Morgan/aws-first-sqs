@@ -40,6 +40,8 @@ export async function producerHandler(
 // grap the message from the queue, and will do something with orderId.
 export async function consumerHandler(event: SQSEvent): Promise<void> {
   console.log("TEMP : ", event);
+  // dead letter queue
+  throw new Error("Test");
   const messages = event.Records; // graping messages
   for (const message of messages) {
     const { orderId } = JSON.parse(message.body);

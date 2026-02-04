@@ -10,11 +10,17 @@ import * as sqs from "aws-cdk-lib/aws-sqs";
 export class FirstSqsStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+    // dead letter queue service
+    const dlq = new sqs.Queue(this, "OrdersDLQ", {
+      queueName: `${this.stackName}-orders-dlq`,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
     // creating queue
     const queue = new sqs.Queue(this, "OrdersQueue", {
-      visibilityTimeout: cdk.Duration.seconds(30),
+      visibilityTimeout: cdk.Duration.seconds(1),
       queueName: `${this.stackName}-orders-queue`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
+      deadLetterQueue: { queue: dlq, maxReceiveCount: 3 },
     });
     // creating 2 lambdas - producer and consumer
     const producer = new NodejsFunction(this, "ProducerFunction", {
