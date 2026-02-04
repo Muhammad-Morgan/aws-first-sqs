@@ -39,12 +39,12 @@ export async function producerHandler(
 }
 // grap the message from the queue, and will do something with orderId.
 export async function consumerHandler(event: SQSEvent): Promise<void> {
-  console.log("Event Recieved: ", event);
+  console.log("TEMP : ", event);
   const messages = event.Records; // graping messages
   for (const message of messages) {
     const { orderId } = JSON.parse(message.body);
     console.log("Processing order: ", orderId);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // a delaying FN
     console.log("Finished processing order: ", orderId);
   }
 }

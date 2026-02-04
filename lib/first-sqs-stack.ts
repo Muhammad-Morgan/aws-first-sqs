@@ -37,7 +37,7 @@ export class FirstSqsStack extends cdk.Stack {
     // granting access to consumer
     consumer.addEventSource(
       new lambdaEventSources.SqsEventSource(queue, {
-        batchSize: 1, //controls how many messages we're going to get at the same time
+        batchSize: 10, //controls how many messages we're going to get at the same time
       }),
     );
     // initiate the api instance with apigateway v1
